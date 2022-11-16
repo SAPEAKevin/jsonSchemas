@@ -1,0 +1,502 @@
+{
+    "title": "Forecast Schema - Standard: OT, Version: 1.0, Schema: Forecast",
+    "description": "Schema for validating the request payload when creating a Forecast object",
+    "$id": "https://github.com/SAPEAKevin/jsonSchemas/new/main/jsonSchemas/forecast.json",
+  
+    "type": "object",
+    "properties": {
+
+        "forecastId": {
+            "description": "Unique Identifier for the Forecast",
+            "type": "string"
+        },
+
+        "timestamp": {
+            "description": "UTC Timestamp of Forecast run (E.g. 2021-01-06T05:17:19.782Z)",
+            "type": "string"
+        },
+
+        "forecastLines": {
+            "type": "array",
+            "items": {
+                "properties": {
+
+                    "lineId": {
+                        "description": "Unique Forecast line number",
+                        "type": "number"
+                    },
+                 
+                    "partDetail": {
+                        "type": "object",
+                        "properties": {
+                            "mpn": {
+                                "description": "Manufaturer Part Number",
+                                "type": "string"
+                            },
+                            "vpn": {
+                                "description": "Vendor Part Number",
+                                "type": "string"
+                            },
+                            "partAddData": {
+                                "description": "User defined additional properties for Product",
+                                "type": "object",
+                                "properties": {
+                                    "mspn": {
+                                        "description": "Microsoft Part Number",
+                                        "type": "string"
+                                    },
+                                    "msf": {
+                                        "description": "Microsoft Vendor Number",
+                                        "type": "string"
+                                    },
+                                    "pfam": {
+                                        "description": "Product Family",
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": true
+                            }                    
+                        }
+                    },
+
+                    "lineQuantity": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lineQtyType": {
+                                    "description": "Applicable quantities for the Forecast Line",
+                                    "enum": ["Forecast", "Prev Forecast", "Transit Days","Auth to Build","Rack Forecast", "Prev Rack Forecast", "Prod Complete", "Prod ETA","Rack Deviation"]
+                                },
+                                "lineQty": {
+                                    "description": "Unique Identifier for quanity",
+                                    "type": "number"
+                                },
+                                "lineQtyDescription": {
+                                    "description": "Description for quantity",
+                                    "type": "string"
+                                }
+                           }
+                        }
+                    },
+
+                    "linePartners": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "linePartnerType": {
+                                    "description": "Applicable partners for the Forecast Line",
+                                    "enum": ["OEM", "DEM", "Supplier","Distributor", "DC","SI", "Build", "L10", "L11","Inventory"]
+                                },
+                                "linePartnerId": {
+                                    "description": "Unique Identifier for partner",
+                                    "type": "string"
+                                },
+                                "linePartnerName": {
+                                    "description": "Descriptive Identifier / name for partner",
+                                    "type": "string"
+                                },
+                                "linePartnerLocation": {
+                                    "description": "Location for partner",
+                                    "type": "string"
+                                },
+                                "linePartnerRegion": {
+                                    "description": "Region for partner",
+                                    "type": "string"
+                                },
+                                "linePartnerGeo": {
+                                    "description": "Geo for partner",
+                                    "type": "string"
+                                }
+                           }
+                        }
+                    },
+                        
+                    "lineControl": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lineControlType": {
+                                    "description": "Flexible control for Forecast Line",
+                                    "enum": ["GR Required"]
+                                },
+                                "lineControlValue": {
+                                    "description": "Control ID - E.g. GR Required = Y",
+                                    "type": "string"
+                                }
+                           }
+                        }
+                    },
+
+                    "lineReference": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lineRefType": {
+                                    "description": "Flexible references for the Forecast Line",
+                                    "enum": ["Production ID", "PO", "Priority Rank", "Control Plane","Callout", "Fulfillment Model","Prev Rack Forecast", "Rack Forecast", "Rack Deviation"]
+                                },
+                                "lineRefId": {
+                                    "description": "Reference Identifier for Forecast Line",
+                                    "type": "string"
+                                },
+                                "lineRefDescription": {
+                                    "description": "Description for Reference identfier",
+                                    "type": "string"
+                                }
+                           }
+                        }
+                    },
+            
+                    "lineNotes": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lineNoteType": {
+                                    "description": "Notes pertaining to Forecast Line",
+                                    "enum": ["Award","Supplier","Buyer"]
+                                },
+                                "lineNoteBody": {
+                                    "description": "note body, represented as an array of text",
+                                    "type": "array",
+                                    "items": {
+                                        "noteLine": { "type": "string" }
+                                    }
+                                }
+                            }
+                        }
+                    },
+            
+                    "lineStatus": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lineStatusType": {
+                                    "description": "Status pertaining to Forecast Line",
+                                    "enum": ["Award","Initial","Committed", "Supply Lifecycle","Lifecycle"]
+                                },
+                                "lineStatusValue": {
+                                    "description": "The status as it relates to lineStatusType",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+            
+                    "lineDate": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lineDateType": {
+                                    "description": "Description of what the lineDateValue contains",
+                                    "enum": ["Award","Forecast","Commit","ProdComplete","FG Build By","ProdETA","L10Start","L11Start","BSLTestPlanStart","BSLTestPlanSEnd", "GR ETA", "GR ACtual", "DC ETA", "DC Dock", "DC Need By", "GR Need By"]
+                                },
+                                "lineDateValue": {
+                                    "description": "UTC Timestamp of date related to dateType (E.g. 2021-01-06T05:17:19.782Z)",
+                                    "type": "string"
+                                },
+                                "lineWeekValue": {
+                                    "description": "Week number of date related to dateType (E.g. 31)",
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    },
+
+                    "lineReasons": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "lineReasonType": {
+                                    "description": "Reason type",
+                                    "enum": ["Prod ETA","Prod Complete"]
+                                },
+                                "lineReason": {
+                                    "description": "Reason",
+                                    "enum": ["MATERIAL DELAY - BUYER MANAGED","MATERIAL DELAY - VENDOR MANAGED", "DATA ENTRY ERROR"]
+                                },
+                                "lineSubReason": {
+                                    "description": "Sub reason to the reason code",
+                                    "type": "string"
+                                },
+                                "lineReasonDescription": {
+                                    "description": "Description of the reason",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },     
+
+                    "lineForecastAddData": {
+                        "description": "User defined additional properties for Forecast Line",
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true
+                    }
+
+                },
+                "required": ["partDetail"],
+                "additionalProperties": false
+            }
+        }, 
+
+        "commitLines": {
+            "type": "array",
+            "items": {
+                "properties": {
+                 
+                    "commitPartDetail": {
+                        "type": "object",
+                        "properties": {
+                            "mpn": {
+                                "description": "Manufaturer Part Number",
+                                "type": "string"
+                            },
+                            "vpn": {
+                                "description": "Vendor Part Number",
+                                "type": "string"
+                            },
+                            "partAddData": {
+                                "description": "User defined additional properties for Product",
+                                "type": "object",
+                                "properties": {
+                                    "mspn": {
+                                        "description": "Microsoft Part Number",
+                                        "type": "string"
+                                    },
+                                    "msf": {
+                                        "description": "Microsoft Vendor Number",
+                                        "type": "string"
+                                    },
+                                    "pfam": {
+                                        "description": "Product Family",
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": true
+                            }                    
+                        }
+                    },
+
+                    "commitQuantity": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "commitQtyType": {
+                                    "description": "Applicable quantities for the Forecast Commit Line",
+                                    "enum": ["Committed"]
+                                },
+                                "commitQty": {
+                                    "description": "Commit quanity",
+                                    "type": "number"
+                                },
+                                "commitQtyDescription": {
+                                    "description": "Description for quantity",
+                                    "type": "string"
+                                }
+                           }
+                        }
+                    },
+
+                    "commitReference": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "commitRefType": {
+                                    "description": "Flexible references for the Forecast Commit Line",
+                                    "enum": ["Production ID", "PO", "Prev Rack Forecast", "Rack Forecast", "Rack Deviation"]
+                                },
+                                "commitRefId": {
+                                    "description": "Reference Identifier for Forecast Commit Line",
+                                    "type": "string"
+                                },
+                                "commitRefDescription": {
+                                    "description": "Description for Reference identfier",
+                                    "type": "string"
+                                }
+                           }
+                        }
+                    },
+            
+                    "commitNotes": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "commitNoteType": {
+                                    "description": "Notes pertaining to Forecast Commit",
+                                    "enum": ["Commit","Supplier"]
+                                },
+                                "commitNoteBody": {
+                                    "description": "note body, represented as an array of text",
+                                    "type": "array",
+                                    "items": {
+                                        "noteLine": { "type": "string" }
+                                    }
+                                }
+                            }
+                        }
+                    },
+            
+                    "commitStatus": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "commitStatusType": {
+                                    "description": "Status pertaining to Forecast Commit",
+                                    "enum": ["Award","Initial","Committed"]
+                                },
+                                "commitStatusValue": {
+                                    "description": "The status as it relates to commitStatusType",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+            
+                    "commitDate": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "commitDateType": {
+                                    "description": "Description of what the commitDateValue contains",
+                                    "enum": ["Award","Forecast","Commit","ProdComplete","FG Build By","FG ETA","FG Actual","ProdETA","L10Start","L11Start","BSLTestPlanStart","BSLTestPlanSEnd", "GR ETA", "GR ACtual", "DC ETA", "DC Dock", "DC Need By", "GR Need By"]
+                                },
+                                "commitDateValue": {
+                                    "description": "UTC Timestamp of date related to commitdateType (E.g. 2021-01-06T05:17:19.782Z)",
+                                    "type": "string"
+                                },
+                                "commitWeekValue": {
+                                    "description": "Week number of date related to commitdateType (E.g. 31)",
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    },
+            
+                    "commitAddData": {
+                        "description": "User defined additional properties for Forecast Commit",
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": true
+                    }
+
+                }
+            }
+        }, 
+
+        "partners": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "partnerType": {
+                        "description": "Applicable partners for the Forecast",
+                        "enum": ["OEM", "DEM", "Supplier","Distributor", "SI", "L10", "L11","Build","Inventory"]
+                    },
+                    "partnerId": {
+                        "description": "Unique Identifier for partner",
+                        "type": "string"
+                    },
+                    "partnerName": {
+                        "description": "Descriptive Identifier / name for partner",
+                        "type": "string"
+                    },
+                    "linePartnerLocation": {
+                        "description": "Location for partner",
+                        "type": "string"
+                    },
+                    "partnerRegion": {
+                        "description": "Region for partner",
+                        "type": "string"
+                    },
+                    "partnerGeo": {
+                        "description": "Geo for partner",
+                        "type": "string"
+                    }
+               }
+            }
+        },
+
+        "reference": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "refType": {
+                        "description": "Flexible references for the Forecast",
+                        "enum": ["Production ID", "PO"]
+                    },
+                    "refId": {
+                        "description": "Reference Identifier for Forecast",
+                        "type": "string"
+                    },
+                    "refDescription": {
+                        "description": "Description for Reference identfier",
+                        "type": "string"
+                    }
+               }
+            }
+        },
+
+        "notes": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "noteType": {
+                        "description": "Notes pertaining to Forecast",
+                        "enum": ["Award"]
+                    },
+                    "noteBody": {
+                        "description": "note body, represented as an array of text",
+                        "type": "array",
+                        "items": {
+                            "noteLine": { "type": "string" }
+                        }
+                    }
+                }
+            }
+        },
+
+        "status": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "statusType": {
+                        "description": "Status pertaining to Forecast",
+                        "enum": ["Award","Initial","Committed"]
+                    },
+                    "statusValue": {
+                        "description": "The status as it relates to statusType",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+
+        "date": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "dateType": {
+                        "description": "Description of what the dateValue contains",
+                        "enum": ["Award","Forecast","Commit","ProdComplete","FG Build By","ProdETA","L10Start","L11Start","BSLTestPlanStart","BSLTestPlanSEnd", "GR ETA", "GR ACtual", "DC ETA", "DC Dock", "DC Need By", "GR Need By"]
+                    },
+                    "dateValue": {
+                        "description": "UTC Timestamp of date related to dateType (E.g. 2021-01-06T05:17:19.782Z)",
+                        "type": "string"
+                    },
+                    "weekValue": {
+                        "description": "Week number of date related to dateType (E.g. 31)",
+                        "type": "number"
+                    }
+                }
+            }
+        },
+
+        "forecastAddData": {
+            "description": "User defined additional properties for Forecast",
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true
+        }
+    },
+    "required": ["forecastId"],
+    "additionalProperties": false
+  }
