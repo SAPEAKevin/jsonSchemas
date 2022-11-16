@@ -1,7 +1,7 @@
 {
     "title": "Forecast Schema - Standard: OT, Version: 1.0, Schema: Forecast",
     "description": "Schema for validating the request payload when creating a Forecast object",
-    "$id": "https://github.com/SAPEAKevin/jsonSchemas/new/main/jsonSchemas/forecast.json",
+    "$id": "https://github.com/SAPEAKevin/jsonSchemas/blob/main/forecast.json",
   
     "type": "object",
     "properties": {
