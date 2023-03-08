@@ -1,2 +1,2 @@
 # jsonSchemas
-JSON Schemas
+JSON Schemas for OneToken
